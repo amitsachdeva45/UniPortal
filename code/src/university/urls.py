@@ -15,7 +15,11 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf.urls import url
+from frontend.views import signup, insert
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    url(r'^signup/$', signup, name='signup'),
+    url(r'^home/$', insert, name='home')
 ]
