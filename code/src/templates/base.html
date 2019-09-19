@@ -1,9 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>{% block head_value %} Bootstrap {% endblock %}</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/navbar-static/">
+    {% include 'bootstrap.html' %}
+    <style>
+    {% block style %}
+    {% endblock %}
+    </style>
 </head>
 <body>
+<header>
+    <div class ="university_name">
+        <font>Amit University</font>
+    </div>
+</header>
 {% block content %}
 {% endblock %}
+<footer>
+    Bye
+</footer>
 </body>
 </html>

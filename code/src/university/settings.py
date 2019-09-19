@@ -122,6 +122,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+#Static files can js, css files which contains code
+#This place is where all files are finally collected (from staticfiles_dir or internal static files)
+#It can be aws service or any cloud service or even part of project)
+#It will happen during deployment
+STATIC_ROOT = os.path.join(BASE_DIR,"static_and_media_files","static_root")
+#"/var/www/example.com/static/"    #Deployement url for path of static files
+
+#Directories where are keeping our static files
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static_and_media_files","static_files"),
+]
+
+#media can photos, any thing which we upload in forms
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR,"static_and_media_files","media_root")
+
 DATABASE = 'university'
 CLIENT = 'mongodb://localhost:27017/'
 

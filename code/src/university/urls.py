@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from django.conf.urls import url
+from django.conf import settings
+from django.conf.urls.static import static
 from frontend.views import signup, insert
 
 urlpatterns = [
@@ -23,3 +25,10 @@ urlpatterns = [
     url(r'^signup/$', signup, name='signup'),
     url(r'^home/$', insert, name='home')
 ]
+
+#Here we are appending static urls with url patterns
+# we are using settings.Debug here so that we should keep in mind that on production we should Debug : False
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root = settings.STATIC_ROOT)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

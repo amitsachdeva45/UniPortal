@@ -1,21 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Sign up</h2>
+  <div class = "signupForm">
+  <h2>Sign up Candidate</h2>
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
-      <p>
-        {{ field.label_tag }}<br>
-        {{ field }}
-        {% if field.help_text %}
-          <small style="color: grey">{{ field.help_text }}</small>
-        {% endif %}
+      <div class="col-sm-12 col-md-4 col-lg-4 col-xs-12 signupFormDiv">
+
+          <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 inputSignupForm">
+            <div class = "col-sm-12 col-md-12 col-lg-12 col-xs-12" style="margin-top:10px;"><label style="color:white;">{{ field.label_tag }}</label></div ><div class = "col-sm-12 col-md-12 col-lg-12 col-xs-12" style="margin-top:-10px;">{{ field }}</div>
+          </div>
         {% for error in field.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
-      </p>
+      </div>
     {% endfor %}
-    <button type="submit">Sign up</button>
+    <button type="submit" style="color:white; margin-left: 40%; margin-top:4%; background-color: black; width: 100px;">Sign up</button>
   </form>
+  </div>
 {% endblock %}
