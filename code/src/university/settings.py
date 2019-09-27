@@ -131,7 +131,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,"static_and_media_files","static_root")
 
 #Directories where are keeping our static files
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static_and_media_files","static_files"),
+    os.path.join(BASE_DIR, "static_and_media_files","static_files")
 ]
 
 #media can photos, any thing which we upload in forms

@@ -1,9 +1,42 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <div class = "home_style">
-        <div class ="login_form">
+    <div class = "home-style">
+        <div class ="login-form">
 
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class = "loginInternalForm col-xs-12 col-lg-12 col-sm-12 col-md-12">
+                        {% for field, errors in form.errors.items %}
+                            {% for error in errors %}
+                                <p style="color:red;">{{error}}</p>
+                            {% endfor %}
+                        {% endfor %}
+                        <div>
+                            <font>Login Form</font>
+                        </div>
+                        <div>
+                            {{ form.email }}
+                        </div>
+                        <div>
+                            {{ form.password }}
+                        </div>
+                        <div>
+                            <button type="submit">Submit</button><br><br>
+                            <a href="{% url 'signup' %}" style="text-decoration: none;">New? Signup as a Candidate</a>
+                        </div>
+                    </div>
+                </form>
+        </div>
+        <div class ="notification-form">
+            <font style="color:white; text-style:underline; font-size: 24px;"><strong>Public Announcements</strong></font>
+            {% for notification in notifications %}
+            <div class = "col-lg-10 col-md-10 col-sm-10 col-xs-10" style="background-color: #666; margin: 3px;">
+                <strong>{{notification.description}}</strong><br>
+                    <font style="font-style: italic; color: white;" >{{notification.name}}</font>
+                    <font style="color: white; font-size:10px;" >{{notification.date_posted}}</font>
+            </div>
+            {% endfor %}
         </div>
     </div>
 {% endblock %}

@@ -50,4 +50,27 @@ footer {
 .signupFormDiv {
     float: none;
     margin: 0 auto;
+};
+
+.inputSignupForm table tr td{
+    width: 50%;
+}
+.home-style {
+    width: 100%;
+    height: 100px;
+    background-color: yellow;
+}
+.login-form {
+    width:50%;
+    background-color:red;
+    height: 100%;
+    float: left;
+
+}
+.notification-form {
+    width:50%;
+    background-color:green;
+    height: 100%;
+    float: left;
+
 }

@@ -13,3 +13,15 @@ def insert_one(collection, data):
     mydb = myclient[settings.DATABASE]
     mycol = mydb[collection]
     mycol.insert_one(data)
+
+def get_all(collection, data):
+    myclient = pymongo.MongoClient(settings.CLIENT)
+    mydb = myclient[settings.DATABASE]
+    mycol = mydb[collection]
+    return mycol.find(data)
+
+def get_find_one(collection, data):
+    myclient = pymongo.MongoClient(settings.CLIENT)
+    mydb = myclient[settings.DATABASE]
+    mycol = mydb[collection]
+    return mycol.find_one(data)

@@ -6,7 +6,7 @@
   <form method="post">
     {% csrf_token %}
     {% for field in form %}
-      <div class="col-sm-12 col-md-4 col-lg-4 col-xs-12 signupFormDiv">
+      <div class="col-sm-12 col-md-3 col-lg-3 col-xs-12 signupFormDiv">
 
           <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 inputSignupForm">
             <div class = "col-sm-12 col-md-12 col-lg-12 col-xs-12" style="margin-top:10px;"><label style="color:white;">{{ field.label_tag }}</label></div ><div class = "col-sm-12 col-md-12 col-lg-12 col-xs-12" style="margin-top:-10px;">{{ field }}</div>
@@ -16,7 +16,7 @@
         {% endfor %}
       </div>
     {% endfor %}
-    <button type="submit" style="color:white; margin-left: 40%; margin-top:4%; background-color: black; width: 100px;">Sign up</button>
+    <button type="submit" class = "loginButton">Signup</button>
   </form>
   </div>
 {% endblock %}

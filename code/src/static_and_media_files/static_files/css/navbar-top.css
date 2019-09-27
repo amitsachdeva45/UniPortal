@@ -30,8 +30,11 @@ footer {
 .university_name font{
     width: 100%;
     height: 100%;
-    color: white;
     font-size: 34px;
+}
+.university_name font a{
+    text-decoration: none;
+    color: white;
 }
 .signupForm {
     width: 100%;
@@ -51,6 +54,43 @@ footer {
     float: none;
     margin: 0 auto;
 }
+
 .inputSignupForm table tr td{
     width: 50%;
+}
+.home-style {
+    width: 100%;
+    height: 580px;
+    background-color: #999;
+}
+.login-form {
+    width:40%;
+    height: 100%;
+    float: left;
+
+}
+.notification-form {
+    width:60%;
+    height: 100%;
+    float: left;
+    overflow-y: auto;
+
+}
+.login-form .loginInternalForm {
+    margin: 0 auto;
+    margin-top: 100px;
+
+}
+.login-form .loginInternalForm div font{
+    font: 30px arial, sans-serif;
+
+}
+.login-form .loginInternalForm div input, button{
+    margin-top: 10px;
+    width: 300px;
+}
+.login-form .loginInternalForm div button {
+    color:white;
+    margin-top:4%;
+    background-color: black;
 }
