@@ -94,3 +94,33 @@ footer {
     margin-top:4%;
     background-color: black;
 }
+.candidate_header, .candidate_footer {
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+    float:left;
+}
+.candidate_menu {
+    width: 100%;
+    height: auto;
+    background-color: grey;
+    border: 1px solid white;
+}
+.candidate-home-data {
+    float:left;
+    background-color: #666;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid white;
+}
+.candidate-home-data font {
+    color: white;
+}
+.candidate-home-data label {
+    color: #FFA07A;
+}
+.candidate-home-main {
+    float: left;
+    background-color: #666;
+    height: 520px;
+}

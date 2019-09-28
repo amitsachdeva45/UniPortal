@@ -15,15 +15,18 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
-from frontend.views import signup, home
+from frontend.views import signup, home, logoutHome#, tempview
 
 urlpatterns = [
     path('admin', admin.site.urls),
-    url(r'^signup$', signup, name='signup'),
-    url(r'$', home, name='home')
+    path(r'signup', signup, name='signup'),
+    path(r'', home, name='home'),
+    #path(r'test1/', tempview, nam(e='temp_view')
+    url(r'^logout/', logoutHome, name="logout"),
+    url(r'^candidate/', include(('candidate.urls', 'candidate'), namespace="candidate"))
 ]
 
 #Here we are appending static urls with url patterns

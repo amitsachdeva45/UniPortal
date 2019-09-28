@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'frontend'
+    'frontend',
+    'candidate'
 ]
 
 MIDDLEWARE = [
@@ -141,4 +142,13 @@ MEDIA_ROOT = os.path.join(BASE_DIR,"static_and_media_files","media_root")
 
 DATABASE = 'university'
 CLIENT = 'mongodb://localhost:27017/'
+
+LOGIN_URL = "/signup/"
+#Memcached Cache
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
+    }
+}
 

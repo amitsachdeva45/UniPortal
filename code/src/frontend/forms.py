@@ -10,13 +10,13 @@ SEMESTER_CHOICES = [
     ('3', 'Summer')
 ]
 DEGREE_CHOICES = [
-    ('1', 'Bachelor'),
-    ('2', 'Master')
+    ('Bachelor', 'Bachelor'),
+    ('Master', 'Master')
 ]
 COURSE_CHOICES = [
-    ('1', 'CSE'),
-    ('2', 'ECE'),
-    ('3','CIVIL')
+    ('CSE', 'CSE'),
+    ('ECE', 'ECE'),
+    ('CIVIL','CIVIL')
 ]
 YEAR = [x for x in range(1980,2040)]
 STARTING_YEAR = [('2019', '2019'),

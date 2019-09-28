@@ -1,12 +1,21 @@
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.shortcuts import render, redirect
 from .forms import SignUpForm, UserLoginForm
 from university.common_function import get_id, insert_one, get_all, get_find_one
 from datetime import date
 from datetime import datetime
 from django.contrib.auth import login, get_user_model, logout
+from django.contrib.auth.decorators import login_required
+from django.core.cache import cache
+from django.http import HttpResponseRedirect
 
 User = get_user_model()
+
+# @login_required(login_url='/')
+# def tempview(request):
+#     logout(request)
+#     print("hello")
+#     return render(request, "testing5.html", {})
 
 def remainingSignup(form, id):
     obj = {}
@@ -68,13 +77,40 @@ def fetchNotifications(is_public):
         notification.append(data1)
     return notification
 
+def callAdmin(temp):
+    print("Will Call admin")
 
-def fetchUserDetail(email):
+
+def cachingData():
+    cache_key = 'my_unique_key'  # needs to be unique
+    cache_time = 86400  # time in seconds for cache to be valid
+    data = cache.get(cache_key)  # returns None if no key-value pair
+    if not data:
+        cache.set(cache_key, data, cache_time)
+
+def fetchUserDetail(request, email):
     collection = "auth_user"
     data = dict()
     data['email'] = email
-    temp = get_find_one("auth_user", data)
-    print(temp)
+    userData = get_find_one("auth_user", data)
+    final_dict = dict()
+    del userData['password']
+    if userData['is_superuser'] == True:
+        callAdmin(userData)
+    else:
+        data2 = dict()
+        data2['user_id'] = int(userData['id'])
+        remaining = get_find_one("userBasicDetail", data2)
+        userData.update(remaining)
+        if remaining['type_of_user'] == "candidate":
+            cache.set("CandidateData", userData)
+            cache.set("CandidateUserId", userData['id'])
+            return "candidate"
+        else:
+            print("Will Call teacher page")
+
+
+
 
 def home(request, *args, **kwargs):
     form = UserLoginForm(request.POST or None)
@@ -86,5 +122,13 @@ def home(request, *args, **kwargs):
         email = form.cleaned_data.get('email')
         user_obj = User.objects.get(email__iexact = email)
         login(request,user_obj)
-        fetchUserDetail(email)
+        response = fetchUserDetail(request, email)
+        if response == "candidate":
+            return redirect("candidate:candidateHome")
     return render(request, "home.html", context)
+
+
+def logoutHome(request):
+    logout(request)
+    cache.clear()
+    return HttpResponseRedirect("/")
