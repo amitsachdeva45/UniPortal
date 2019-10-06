@@ -124,3 +124,6 @@ footer {
     background-color: #666;
     height: 520px;
 }
+.candidate-course-home {
+    float: left;
+}

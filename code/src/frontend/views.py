@@ -27,7 +27,8 @@ def remainingSignup(form, id):
     obj['course_choice'] = form.cleaned_data.get('course_choice')
     obj['type_of_user'] = form.cleaned_data.get('type_of_user')
     obj['starting_year'] = form.cleaned_data.get('starting_year')
-
+    obj['completion_status'] = "incomplete"
+    obj['current_semester'] = "1"
     insert_one(collection, obj)
 
 def signup(request):
