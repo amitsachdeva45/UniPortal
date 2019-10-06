@@ -33,8 +33,10 @@
             {% for notification in notifications %}
             <div class = "col-lg-10 col-md-10 col-sm-10 col-xs-10" style="background-color: #666; margin: 3px; border:1px solid black;">
                 <strong>{{notification.description}}</strong><br>
+                    <font style="color: white; font-size:14px;" > {{notification.degree}} {{notification.course}}</font><br>
                     <font style="font-style: italic; color: white;" >{{notification.name}}</font>
                     <font style="color: white; font-size:10px;" >{{notification.date_posted}}</font>
+
             </div>
             {% endfor %}
         </div>

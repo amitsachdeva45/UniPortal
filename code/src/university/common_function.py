@@ -20,6 +20,7 @@ def get_all(collection, data):
     mycol = mydb[collection]
     return mycol.find(data)
 
+
 def get_find_one(collection, data):
     myclient = pymongo.MongoClient(settings.CLIENT)
     mydb = myclient[settings.DATABASE]

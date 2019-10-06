@@ -64,7 +64,10 @@ def fetchNotifications(is_public):
     collection = "notifications"
     data = dict()
     data['is_public'] = str(is_public)
-    value = get_all(collection, data)
+    final_dict = dict()
+    final_dict['$query'] = data
+    final_dict['$orderby'] = {"date_posted": -1}
+    value = get_all(collection, final_dict)
     notification = []
     for data1 in value:
         if data1['is_admin'] == "1":
