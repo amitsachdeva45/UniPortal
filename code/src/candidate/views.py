@@ -4,7 +4,7 @@ from django.shortcuts import redirect
 from django.core.cache import cache
 from django.http import HttpResponseRedirect, HttpResponse
 import json
-from university.common_function import get_id, insert_one, get_all, get_find_one
+from university.common_function import get_id, insert_one, get_all, get_find_one, update_one
 
 def commonData():
     userData = cache.get("CandidateData")
@@ -34,12 +34,26 @@ def candidateHome(request):
         return HttpResponseRedirect("/")
     return render(request, "candidateHome.html", context)
 
+def fetchTotalScores(user_id):
+    data = dict()
+    data["status"] = "complete"
+    data['user_id'] = str(user_id)
+    all_courses = get_all("course_user", data)
+    count = 0
+    counter =0
+    for course in all_courses:
+        count += course['scores']
+        counter += 1
+    if counter == 0:
+        return 0
+    return count/float(counter)
+
 @login_required(login_url='/')
 def candidateCourse(request):
     context = commonData()
     if bool(context) != True:
         return HttpResponseRedirect("/")
-    #context['tempData'] = json.loads(candidateFetchCourse(request).content)
+    context['totalScores'] = fetchTotalScores(cache.get("CandidateUserId"))
     return render(request, "candidateCourse.html", context)
 
 @login_required(login_url='/')
@@ -49,12 +63,12 @@ def candidateFetchCourse(request):
     all_courses = get_all("course_user", data2)
     data = list()
     for course in all_courses:
-        temp = list()
         data2 = dict()
         data2['semester'] = str(request.POST.get('semester'))
         data2['id'] = int(course['course_id'])
         single_course = get_find_one("courses", data2)
         if single_course != None:
+            data2['scores'] = course['scores']
             data2['status'] = course['status']
             data2['course_name'] = single_course['course_name']
             data2['description'] = single_course['Description']
@@ -97,6 +111,7 @@ def selectCourse(request):
         data['course_id'] = str(request.POST.get('course_id'))
         data['user_id'] = str(request.POST.get('user_id'))
         data['status'] = "incomplete"
+        data['scores'] = 0.0
         insert_one("course_user", data)
         return HttpResponse(json.dumps(list()), content_type='application/json', status=200)
     return HttpResponse(json.dumps(list()), content_type='application/json', status=404)
@@ -129,3 +144,26 @@ def fetchNotification(request):
         notification.append(data1)
     context['notifications'] = notification
     return render(request, "candidateNotification.html", context)
+
+@login_required(login_url='/')
+def payfees(request):
+    context = commonData()
+    if bool(context) != True:
+        return HttpResponseRedirect("/")
+    if request.method == "POST":
+        data1 = dict()
+        data = dict()
+        data1['user_id'] = int(cache.get("CandidateUserId"))
+        fetch_data = get_find_one("userBasicDetail", data1)
+        if fetch_data['fees']-int(request.POST.get("fees")) >= 0:
+            data['fees'] = fetch_data['fees']-int(request.POST.get("fees"))
+        else:
+            data['fees'] = 0
+        updCond = dict()
+        updCond['$set'] = data
+        update_one("userBasicDetail", {"user_id": int(cache.get("CandidateUserId"))}, updCond)
+    data = dict()
+    data['user_id'] = cache.get("CandidateUserId")
+    fetch_data = get_find_one("userBasicDetail", data)
+    context["fees"] = fetch_data['fees']
+    return render(request, "candidateFees.html", context)

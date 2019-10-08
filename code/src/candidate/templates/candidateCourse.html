@@ -4,6 +4,7 @@
     <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 candidate-home-main">
         <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 candidate-course-home">
             <h3 style="color:white">SELECTED COURSE</h3>
+            <h4 style="color:yellow">Current GPA: {{totalScores}}</h4>
             <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12" style="border: 1px solid white;">
                 <form action="" method="POST" id = "selectCandidateCourse">
                     {% csrf_token %}
@@ -121,7 +122,9 @@
                         final_html += '<h6><strong>Course Description: </strong>'+json[i]['description']+'</h6>';
                         if(json[i]['status'] == 'complete')
                         {
+                           final_html += '<h6 style="color:yellow"><strong>Scores: </strong>'+ json[i]['scores']+'</h6>';
                            final_html += '<h6 style="color:green"><strong>Status: </strong> Complete</h6>';
+
                         }
                         else
                         {

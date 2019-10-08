@@ -37,14 +37,11 @@
         <li class="nav-item {% ifequal request.path '/candidate/course/' %} active {% endifequal %}">
           <a class="nav-link" href="{% url 'candidate:candidateCourse' %}">Courses</a>
         </li>
-        <li class="nav-item {% ifequal request.path '/candidate/candidateNotification/' %} active {% endifequal %}">
+        <li class="nav-item {% ifequal request.path '/candidate/notification/' %} active {% endifequal %}">
           <a class="nav-link" href="{% url 'candidate:fetchNotification' %}">Notifications</a>
         </li>
         <li class="nav-item {% ifequal request.path '/candidate/fees/' %} active {% endifequal %}">
-          <a class="nav-link" href="#">Fees</a>
-        </li>
-        <li class="nav-item {% ifequal request.path '/candidate/scores/' %} active {% endifequal %}">
-          <a class="nav-link" href="#">Scores</a>
+          <a class="nav-link" href="{% url 'candidate:payfees' %}">Fees</a>
         </li>
       </ul>
     </nav>

@@ -29,6 +29,12 @@ def remainingSignup(form, id):
     obj['starting_year'] = form.cleaned_data.get('starting_year')
     obj['completion_status'] = "incomplete"
     obj['current_semester'] = "1"
+    fees = 0
+    if obj['branch_choice'] == "Master":
+        fees = 5000*4
+    else:
+        fees = 5000*8
+    obj['fees'] = int(fees)
     insert_one(collection, obj)
 
 def signup(request):
@@ -107,8 +113,8 @@ def fetchUserDetail(request, email):
         remaining = get_find_one("userBasicDetail", data2)
         userData.update(remaining)
         if remaining['type_of_user'] == "candidate":
-            cache.set("CandidateData", userData)
-            cache.set("CandidateUserId", userData['id'])
+            cache.set("CandidateData", userData, 600)
+            cache.set("CandidateUserId", userData['id'], 600)
             return "candidate"
         else:
             print("Will Call teacher page")

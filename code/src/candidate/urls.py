@@ -1,5 +1,6 @@
 from django.urls import path
-from .views import candidateHome, candidateCourse, candidateFetchCourse, candidateFetchEachSemCourse, selectCourse, fetchNotification
+from .views import candidateHome, candidateCourse, candidateFetchCourse, candidateFetchEachSemCourse, selectCourse, fetchNotification, payfees
+
 from django.conf.urls import url
 
 urlpatterns = [
@@ -8,6 +9,7 @@ urlpatterns = [
     url(r'^fetchCourse/$', candidateFetchCourse, name ="candidateFetchCourse"),
     url(r'^fetchCourseSemester/(?P<id>\d+)/$', candidateFetchEachSemCourse, name ="candidateFetchEachSemCourse"),
     url(r'^selectCourse/$', selectCourse, name ="selectCourse"),
-    url(r'^candidateNotification/$', fetchNotification, name ="fetchNotification")
+    url(r'^notification/$', fetchNotification, name ="fetchNotification"),
+    url(r'^fees/$', payfees, name ="payfees")
     #/(?P<id>\d+)/
 ]

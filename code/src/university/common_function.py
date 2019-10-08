@@ -26,3 +26,9 @@ def get_find_one(collection, data):
     mydb = myclient[settings.DATABASE]
     mycol = mydb[collection]
     return mycol.find_one(data)
+
+def update_one(collection, whereCond, updateCond):
+    myclient = pymongo.MongoClient(settings.CLIENT)
+    mydb = myclient[settings.DATABASE]
+    mycol = mydb[collection]
+    return mycol.update_one(whereCond, updateCond, upsert=False)
