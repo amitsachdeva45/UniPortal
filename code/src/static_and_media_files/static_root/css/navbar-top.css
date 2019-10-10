@@ -30,8 +30,11 @@ footer {
 .university_name font{
     width: 100%;
     height: 100%;
-    color: white;
     font-size: 34px;
+}
+.university_name font a{
+    text-decoration: none;
+    color: white;
 }
 .signupForm {
     width: 100%;
@@ -50,27 +53,77 @@ footer {
 .signupFormDiv {
     float: none;
     margin: 0 auto;
-};
+}
 
 .inputSignupForm table tr td{
     width: 50%;
 }
 .home-style {
     width: 100%;
-    height: 100px;
-    background-color: yellow;
+    height: 580px;
+    background-color: #999;
 }
 .login-form {
-    width:50%;
-    background-color:red;
+    width:40%;
     height: 100%;
     float: left;
 
 }
 .notification-form {
-    width:50%;
-    background-color:green;
+    width:60%;
     height: 100%;
     float: left;
+    overflow-y: auto;
 
+}
+.login-form .loginInternalForm {
+    margin: 0 auto;
+    margin-top: 100px;
+
+}
+.login-form .loginInternalForm div font{
+    font: 30px arial, sans-serif;
+
+}
+.login-form .loginInternalForm div input, button{
+    margin-top: 10px;
+    width: 300px;
+}
+.login-form .loginInternalForm div button {
+    color:white;
+    margin-top:4%;
+    background-color: black;
+}
+.candidate_header, .candidate_footer {
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+    float:left;
+}
+.candidate_menu {
+    width: 100%;
+    height: auto;
+    background-color: grey;
+    border: 1px solid white;
+}
+.candidate-home-data {
+    float:left;
+    background-color: #666;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid white;
+}
+.candidate-home-data font {
+    color: white;
+}
+.candidate-home-data label {
+    color: #FFA07A;
+}
+.candidate-home-main {
+    float: left;
+    background-color: #666;
+    height: 520px;
+}
+.candidate-course-home {
+    float: left;
 }

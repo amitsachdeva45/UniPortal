@@ -1,0 +1,34 @@
+* {
+	margin: 0px;
+	outline: 0px;
+	/* [disabled]padding:0px; */
+}
+body, html
+{
+    width:100%;
+    min-height: 100%;
+	background-color:white;
+
+}
+header {
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+}
+footer {
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+}
+.teacher_menu {
+    width: 100%;
+    height: auto;
+    background-color: grey;
+    border: 1px solid white;
+}
+.teacher_header, .teacher_footer {
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+    float:left;
+}

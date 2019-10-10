@@ -117,7 +117,9 @@ def fetchUserDetail(request, email):
             cache.set("CandidateUserId", userData['id'], 600)
             return "candidate"
         else:
-            print("Will Call teacher page")
+            cache.set("TeacherData", userData, 600)
+            cache.set("TeacherUserId", userData['id'], 600)
+            return "teacher"
 
 
 
@@ -135,6 +137,8 @@ def home(request, *args, **kwargs):
         response = fetchUserDetail(request, email)
         if response == "candidate":
             return redirect("candidate:candidateHome")
+        elif response == "teacher":
+            return redirect("teacher:teacherHome")
     return render(request, "home.html", context)
 
 

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Jekyll v3.8.5">
+    <title>Teacher: {{userName}}</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.3/examples/navbar-static/">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    {% include 'bootstrap.html' %}
+    <style>
+    {% block style %}
+    {% endblock %}
+    </style>
+</head>
+<body>
+<div class ="teacher_header">
+    <div class="col-lg-6 col-md-6 col-xs-6 col-s-6" style="text-align: center; float:left;">
+        <font style="color: white; font-size: 24px;">{{userName}}</font>
+    </div>
+    <div class="col-lg-4 col-md-4 col-xs-4 col-s-4" style="float:left;">
+        <button style="background-color:transparent; border: 0px;  text-align: right;"><a href="{% url 'logout' %}" style="color: white; text-style:none;">Logout</a></button>
+    </div>
+</div>
+<div class ="teacher_menu col-lg-12 col-md-12 col-xs-12 col-s-12" style="float:left;">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: grey !important;">
+      <ul class="navbar-nav">
+        <li class="nav-item {% ifequal request.path '/candidate/' %} active {% endifequal %}">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+      </ul>
+    </nav>
+</div>
+{% block content %}
+{% endblock %}
+<div class ="teacher_footer">
+    <h6 style="text-align: right; color:white;">Copyright: Amit Sachdeva</h6>
+</div>
+</body>
+</html>
