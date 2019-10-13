@@ -2,7 +2,34 @@
 
 {% block content %}
     <div class="teacher-home-main col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
-        {{userDetail.experience | floatformat:2}}
-        AMit
+        <div class="teacher-basicinfo col-lg-8 col-xs-8 col-sm-8 col-md-8 row">
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 teacher-basicinfoeach">
+                <label><strong>Email: </strong></label> {{userDetail.email}}
+            </div>
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 teacher-basicinfoeach">
+                <label><strong>Name: </strong></label> {{userDetail.first_name}} {{userDetail.last_name}}
+            </div>
+        </div>
+        <div class="teacher-basicinfo col-lg-8 col-xs-8 col-sm-8 col-md-8 row">
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 teacher-basicinfoeach">
+                <label><strong>Salary: </strong></label> {{userDetail.salary}}
+            </div>
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 teacher-basicinfoeach">
+                <label><strong>Date of birth: </strong></label> {{userDetail.date_of_birth}}
+            </div>
+        </div>
+        <div class="teacher-basicinfo col-lg-8 col-xs-8 col-sm-8 col-md-8 row">
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 teacher-basicinfoeach">
+                <label><strong>Highest Degree: </strong></label> {{userDetail.degree_achieved}}
+            </div>
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 teacher-basicinfoeach">
+                <label><strong>Date of joining: </strong></label> {{userDetail.date_of_joining}}
+            </div>
+        </div>
+        <div class="teacher-basicinfo col-lg-8 col-xs-8 col-sm-8 col-md-8 row">
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 teacher-basicinfoeach">
+                <label><strong>Experience:  </strong></label> {{userDetail.experience | floatformat:2}} years
+            </div>
+        </div>
     </div>
 {% endblock %}

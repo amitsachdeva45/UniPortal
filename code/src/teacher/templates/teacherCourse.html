@@ -1,5 +1,103 @@
 {% extends 'teacherLayout.html' %}
 
 {% block content %}
-    {{userDetail.experience | floatformat:2}}
+    <div class="teacher-home-main col-lg-12 col-xs-12 col-sm-12 col-md-12">
+        <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" style="float:left">
+            <select name="select_course" id ="select_course" style="width:100%; height: 40px; color: white; background-color: #666; margin-top:10px; ">
+                  <option value="-1">--Select Course--</option>
+                  {% for course in courses%}
+                    <option value="{{course.id}}">{{course.course_name}} ({{course.branch_choice}}  {{course.course_choice}})</option>
+                  {% endfor %}
+            </select>
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" >
+                <span id="success" style="display:none; color:green;">Successful Updated scores</span>
+            </div>
+        </div>
+        <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6"  id ="course" style="float:left">
+
+        </div>
+    </div>
+<script type="text/javascript">
+    var student_scores;
+    function getCSRFToken() {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                if (cookie.substring(0, 10) == ('csrftoken' + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(10));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    function submitScores(type_chosen, course_id)
+    {
+        var final_list = new Object();
+        for(i=0;i<student_scores.length;i++) {
+            var value = "#score_"+student_scores[i];
+            final_list[student_scores[i]] = $(value).val();
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                xhr.setRequestHeader("X-CSRFToken", getCSRFToken());
+            }
+        });
+        $.ajax({
+            type: 'POST',
+            url: '/teacher/submitScores/',
+            dataType: 'json',
+            data: {
+                       "course_id" : course_id,
+                       "type_chosen": type_chosen,
+                       "scores": JSON.stringify(final_list)
+                   },
+                   success: function(json) {
+                        $("#success").show();
+                   }
+        });
+    }
+
+    $('#select_course').on('change', function (e) {
+        $("#success").hide();
+        var value = $("#select_course").val();
+        if(value == -1) {
+            $("#course").html("");
+            return;
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/teacher/selectCandidate/',
+            data: {
+                       "course_id" : value,
+                       csrfmiddlewaretoken: getCSRFToken()
+                   },
+                   success: function(json) {
+                        var final_html = "";
+                        final_html += "<div style='width:100%; overflow-y: auto;'>";
+                        var id_array = [];
+                        for(var i=0; i<json.length; i++) {
+                            final_html += "<div style='width:100%; border: 1px solid white; margin-top:10px'>";
+                            final_html += "<label><strong>Name: </strong>"+json[i]['first_name'] + " " + json[i]['last_name']+"</label><br>";
+                            final_html += "<label><strong> Student Id: </strong>"+json[i]['id']+"</label><br>";
+                            final_html += "<label><strong>Scores: </strong></label><input type='number' min='0' max='100' id='score_"+json[i]['id']+"' value="+ json[i]['scores'] +"><br>";
+                            final_html += "</div>";
+                            id_array.push(json[i]['id']);
+                        }
+                        student_scores = id_array;
+                        if(json.length != 0) {
+                            final_html += "<button style='color:white; background-color: black; width:50%;' onclick='submitScores(0,"+value+")'>Submit Scores</button>";
+                            final_html += "<button style='color:white; background-color: black; width:50%;' onclick='submitScores(1,"+value+")'>Complete Course</button>";
+                        } else {
+                           final_html += "<h5 style='color:red; margin-top: 50px; border: 1px solid white;'><strong>No Student in this course</strong></h6>";
+                        }
+                        final_html += "</div>";
+                        $("#course").html(final_html);
+                   }
+        });
+
+    });
+</script>
 {% endblock %}

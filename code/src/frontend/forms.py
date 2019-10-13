@@ -16,7 +16,7 @@ DEGREE_CHOICES = [
 COURSE_CHOICES = [
     ('CSE', 'CSE'),
     ('ECE', 'ECE'),
-    ('CIVIL','CIVIL')
+    ('Civil','Civil')
 ]
 YEAR = [x for x in range(1980,2040)]
 STARTING_YEAR = [('2019', '2019'),
