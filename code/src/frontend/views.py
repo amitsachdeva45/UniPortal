@@ -8,6 +8,9 @@ from django.contrib.auth import login, get_user_model, logout
 from django.contrib.auth.decorators import login_required
 from django.core.cache import cache
 from django.http import HttpResponseRedirect
+import os
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
 
 User = get_user_model()
 
@@ -17,7 +20,7 @@ User = get_user_model()
 #     print("hello")
 #     return render(request, "testing5.html", {})
 
-def remainingSignup(form, id):
+def remainingSignup(form, id, file_name):
     obj = {}
     collection = "userBasicDetail"
     obj['user_id'] = id
@@ -27,6 +30,7 @@ def remainingSignup(form, id):
     obj['course_choice'] = form.cleaned_data.get('course_choice')
     obj['type_of_user'] = form.cleaned_data.get('type_of_user')
     obj['starting_year'] = form.cleaned_data.get('starting_year')
+    obj['profile_picture'] = file_name
     obj['completion_status'] = "incomplete"
     obj['current_semester'] = "1"
     fees = 0
@@ -40,9 +44,22 @@ def remainingSignup(form, id):
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)
+        print(request)
         if form.is_valid():
+
             obj = form.save(commit=True)
-            remainingSignup(form, obj.id)
+            my_uploaded_file = request.FILES['profile_image']
+            my_uploaded_file_name = request.FILES['profile_image'].name
+            final_file_name = ""
+            try:
+                folder = "images/"+str(obj.id)+"/"
+                os.mkdir(os.path.join(settings.MEDIA_ROOT, folder))
+                fs = FileSystemStorage()
+                filename = fs.save(folder + my_uploaded_file.name, my_uploaded_file)
+                final_file_name = str(obj.id)+"/"+my_uploaded_file_name
+            except Exception as e:
+                pass
+            remainingSignup(form, obj.id, final_file_name)
             return redirect('home')
     else:
         form = SignUpForm()

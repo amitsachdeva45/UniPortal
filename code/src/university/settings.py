@@ -138,6 +138,7 @@ STATICFILES_DIRS = [
 
 #media can photos, any thing which we upload in forms
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_ROOT = os.path.join(BASE_DIR,"static_and_media_files","media_root")
 

@@ -6,6 +6,7 @@ from datetime import datetime
 from university.common_function import get_id, insert_one, get_all, get_find_one, update_one
 from django.http import HttpResponseRedirect, HttpResponse
 import json
+from .forms import PostModelForm
 
 def commonData():
     userData = cache.get("TeacherData")
@@ -30,6 +31,7 @@ def teacherCourse(request):
         return HttpResponseRedirect("/")
     data = dict()
     data['user_id'] = str(cache.get("TeacherUserId"))
+    data['status'] = "incomplete"
     all_courses = get_all("course_teacher", data)
     final = list()
     for course in all_courses:
@@ -72,12 +74,21 @@ def selectCandidate(request):
         return HttpResponse(json.dumps(final), content_type='application/json', status=200)
 
 
+def updateTeacherCourseStatus(course_id):
+    upCond = dict()
+    updateData = dict()
+    updateData['status'] = "complete"
+    upCond['$set'] = updateData
+    checkData = dict()
+    checkData['user_id'] = str(cache.get("TeacherUserId"))
+    checkData['course_id'] = str(course_id)
+    update_one("course_teacher", checkData, upCond)
+
 def submitScores(request):
     context = commonData()
     if bool(context) != True:
         return HttpResponseRedirect("/")
     if request.method == "POST":
-        print("HELLO")
         course_id = str(request.POST.get('course_id'))
         scores = json.loads(request.POST.get('scores'))
         type_chosen = int(request.POST.get('type_chosen'))
@@ -89,12 +100,43 @@ def submitScores(request):
             updateData['scores'] = int(scores[score])
             if type_chosen == 1:
                 updateData['status'] = "complete"
+                updateTeacherCourseStatus(course_id)
             upCond['$set'] = updateData
 
             checkData = dict()
             checkData['user_id'] = str(score)
             checkData['course_id'] = str(course_id)
             update_one("course_user", checkData, upCond)
-
-        print(scores)
     return HttpResponse(json.dumps(list()), content_type='application/json', status=200)
+
+def fetchNotification():
+    collection = "notifications"
+    data = dict()
+    data['user_id'] = str(cache.get("TeacherUserId"))
+    final_dict = dict()
+    final_dict['$query'] = data
+    final_dict['$orderby'] = {"date_posted": -1}
+    value = get_all(collection, final_dict)
+    return value
+
+@login_required(login_url='/')
+def teacherNotification(request):
+    context = commonData()
+    if bool(context) != True:
+        return HttpResponseRedirect("/")
+    form = PostModelForm(request.POST or None)
+    if request.method == "POST":
+        if form.is_valid():
+            notification = dict()
+            notification['degree'] = request.POST.get('degree')
+            notification['course'] = request.POST.get('course')
+            notification['description'] = request.POST.get('description')
+            notification['date_posted'] = datetime.now()
+            notification['is_public'] = str(request.POST.get('public'))
+            notification['is_admin'] = "0"
+            notification['user_id'] = str(cache.get("TeacherUserId"))
+            insert_one("notifications", notification)
+            form = PostModelForm(None)
+    context['forms'] = form
+    context['notifications'] = fetchNotification()
+    return render(request, "teacherNotification.html", context)

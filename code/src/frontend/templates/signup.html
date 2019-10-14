@@ -3,7 +3,7 @@
 {% block content %}
   <div class = "signupForm">
   <h2>Sign up Candidate</h2>
-  <form method="post">
+  <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% for field in form %}
       <div class="col-sm-12 col-md-3 col-lg-3 col-xs-12 signupFormDiv">
@@ -16,6 +16,16 @@
         {% endfor %}
       </div>
     {% endfor %}
+    <div class="col-sm-12 col-md-3 col-lg-3 col-xs-12 signupFormDiv">
+      <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12 inputSignupForm">
+          <div class = "col-sm-12 col-md-12 col-lg-12 col-xs-12" style="margin-top:10px;">
+            <label style="color:white;">Profile Picture</label>
+          </div >
+          <div class = "col-sm-12 col-md-12 col-lg-12 col-xs-12" style="margin-top:-10px;">
+            <input type="file" name="profile_image"  accept="image/*">
+          </div>
+      </div>
+    </div>
     <button type="submit" class = "loginButton">Signup</button>
   </form>
   </div>

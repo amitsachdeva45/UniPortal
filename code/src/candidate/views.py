@@ -8,6 +8,10 @@ from university.common_function import get_id, insert_one, get_all, get_find_one
 
 def commonData():
     userData = cache.get("CandidateData")
+
+    profile_picture = "default.png"
+    if "profile_picture" in userData:
+        profile_picture = userData['profile_picture']
     if userData == None:
         return False
     total_semester = 4
@@ -23,7 +27,8 @@ def commonData():
         "userId": cache.get("CandidateUserId"),
         "userName": userData['first_name'] + " " + userData['last_name'],
         "total_semester": range(1, total_semester+1),
-        "remaining_semester": range(current_semester, total_semester+1)
+        "remaining_semester": range(current_semester, total_semester+1),
+        "profile_picture": profile_picture
     }
     return context
 

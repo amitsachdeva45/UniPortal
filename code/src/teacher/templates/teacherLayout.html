@@ -37,6 +37,9 @@
         <li class="nav-item {% ifequal request.path '/teacher/course/' %} active {% endifequal %}">
           <a class="nav-link" href="{% url 'teacher:teacherCourse' %}">Course</a>
         </li>
+        <li class="nav-item {% ifequal request.path '/teacher/notification/' %} active {% endifequal %}">
+          <a class="nav-link" href="{% url 'teacher:teacherNotification' %}">Notifications</a>
+        </li>
       </ul>
     </nav>
 </div>
