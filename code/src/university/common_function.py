@@ -32,3 +32,9 @@ def update_one(collection, whereCond, updateCond):
     mydb = myclient[settings.DATABASE]
     mycol = mydb[collection]
     return mycol.update_one(whereCond, updateCond, upsert=False)
+
+def delete_one(collection, data):
+    myclient = pymongo.MongoClient(settings.CLIENT)
+    mydb = myclient[settings.DATABASE]
+    mycol = mydb[collection]
+    return mycol.delete_one(data)

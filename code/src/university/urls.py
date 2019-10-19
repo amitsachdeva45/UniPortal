@@ -27,7 +27,8 @@ urlpatterns = [
     #path(r'test1/', tempview, nam(e='temp_view')
     url(r'^logout/', logoutHome, name="logout"),
     url(r'^candidate/', include(('candidate.urls', 'candidate'), namespace="candidate")),
-    url(r'^teacher/', include(('teacher.urls', 'teacher'), namespace="teacher"))
+    url(r'^teacher/', include(('teacher.urls', 'teacher'), namespace="teacher")),
+    url(r'^admin/', include(('adminPanel.urls', 'adminPanel'), namespace="adminPanel"))
 ]
 
 #Here we are appending static urls with url patterns

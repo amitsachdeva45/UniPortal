@@ -46,21 +46,21 @@ def signup(request):
         form = SignUpForm(request.POST)
         print(request)
         if form.is_valid():
-
-            obj = form.save(commit=True)
-            my_uploaded_file = request.FILES['profile_image']
-            my_uploaded_file_name = request.FILES['profile_image'].name
-            final_file_name = ""
-            try:
-                folder = "images/"+str(obj.id)+"/"
-                os.mkdir(os.path.join(settings.MEDIA_ROOT, folder))
-                fs = FileSystemStorage()
-                filename = fs.save(folder + my_uploaded_file.name, my_uploaded_file)
-                final_file_name = str(obj.id)+"/"+my_uploaded_file_name
-            except Exception as e:
-                pass
-            remainingSignup(form, obj.id, final_file_name)
-            return redirect('home')
+            if request.FILES['profile_image']:
+                obj = form.save(commit=True)
+                my_uploaded_file = request.FILES['profile_image']
+                my_uploaded_file_name = request.FILES['profile_image'].name
+                final_file_name = ""
+                try:
+                    folder = "images/"+str(obj.id)+"/"
+                    os.mkdir(os.path.join(settings.MEDIA_ROOT, folder))
+                    fs = FileSystemStorage()
+                    filename = fs.save(folder + my_uploaded_file.name, my_uploaded_file)
+                    final_file_name = str(obj.id)+"/"+my_uploaded_file_name
+                except Exception as e:
+                    pass
+                remainingSignup(form, obj.id, final_file_name)
+                return redirect('home')
     else:
         form = SignUpForm()
     return render(request, 'signup.html', {'form': form, 'class': 'hiddenInputSignup'})
@@ -104,9 +104,6 @@ def fetchNotifications(is_public):
         notification.append(data1)
     return notification
 
-def callAdmin(temp):
-    print("Will Call admin")
-
 
 def cachingData():
     cache_key = 'my_unique_key'  # needs to be unique
@@ -123,7 +120,9 @@ def fetchUserDetail(request, email):
     final_dict = dict()
     del userData['password']
     if userData['is_superuser'] == True:
-        callAdmin(userData)
+        cache.set("AdminData", userData, 600)
+        cache.set("AdminUserId", userData['id'], 600)
+        return "admin"
     else:
         data2 = dict()
         data2['user_id'] = int(userData['id'])
@@ -156,6 +155,9 @@ def home(request, *args, **kwargs):
             return redirect("candidate:candidateHome")
         elif response == "teacher":
             return redirect("teacher:teacherHome")
+        else:
+            print("ADMIN")
+            return redirect("adminPanel:adminHome")
     return render(request, "home.html", context)
 
 

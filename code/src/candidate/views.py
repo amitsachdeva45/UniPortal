@@ -19,7 +19,13 @@ def commonData():
         total_semester = 4
     else:
         total_semester = 8
-    current_semester = int(userData['current_semester'])
+
+    if userData['current_semester'] == "complete":
+        current_semester = 0
+        total_semester = -1
+    else:
+        current_semester = int(userData['current_semester'])
+
     if userData == None:
         return {}
     context = {
@@ -69,7 +75,10 @@ def candidateFetchCourse(request):
     data = list()
     for course in all_courses:
         data2 = dict()
-        data2['semester'] = str(request.POST.get('semester'))
+        if cache.get("CandidateData")['current_semester'] == "complete":
+            data2['semester'] = str(-1)
+        else:
+            data2['semester'] = str(request.POST.get('semester'))
         data2['id'] = int(course['course_id'])
         single_course = get_find_one("courses", data2)
         if single_course != None:

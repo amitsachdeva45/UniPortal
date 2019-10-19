@@ -1,0 +1,51 @@
+* {
+	margin: 0px;
+	outline: 0px;
+	/* [disabled]padding:0px; */
+}
+body, html
+{
+    width:100%;
+    min-height: 100%;
+	background-color:white;
+
+}
+header {
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+}
+footer {
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+}
+.admin_menu {
+    width: 100%;
+    height: auto;
+    background-color: grey;
+    border: 1px solid white;
+}
+.admin_header, .admin_footer {
+    width: 100%;
+    height: 50px;
+    background-color: grey;
+    float:left;
+}
+.admin-home-main {
+    background-color: #666;
+    height: 520px;
+    width:100%;
+    float:left;
+}
+.admin-home-data {
+    float:left;
+    background-color: #666;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid white;
+    margin-top:5px;
+}
+.admin-home-data h4 {
+    color:white;
+}

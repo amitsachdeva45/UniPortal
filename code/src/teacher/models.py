@@ -11,7 +11,7 @@ COURSE_CHOICES = [
     ('Civil','Civil')
 ]
 IS_PUBLIC = [
-    ('1', 'Public'),
+    ('1 ', 'Public'),
     ('0', 'Specific')
 ]
 # Create your models here.

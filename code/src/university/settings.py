@@ -37,9 +37,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
     'frontend',
     'candidate',
-    'teacher'
+    'teacher',
+    'adminPanel'
 ]
 
 MIDDLEWARE = [
@@ -154,3 +156,5 @@ CACHES = {
     }
 }
 
+#Crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'

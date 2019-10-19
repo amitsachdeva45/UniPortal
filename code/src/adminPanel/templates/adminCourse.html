@@ -1,0 +1,50 @@
+{% extends 'adminLayout.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 admin-home-main">
+    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" style="float:left; overflow: auto; height: 100%;">
+        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+            <h3 style="color:white;">Add New Course</h3>
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            {{forms| crispy}}
+            <button>SUBMIT</button>
+        </form>
+    </div>
+    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" style="float:left; overflow: auto; height: 100%;">
+        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+            <h3 style="color:white;">All Courses</h3>
+        </div>
+        {% for course in all_courses%}
+        <div class="row col-lg-12 col-xs-12 col-sm-12 col-md-12" style="margin-top:10px; border:1px solid white; height: auto;">
+            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+                <label style="color:white"><strong>Course Name: &nbsp; &nbsp;  </strong></label>{{course.course_name}}<br>
+                <label style="color:white"><strong>Description: &nbsp; &nbsp;   </strong></label>{{course.Description}}<br>
+                <label style="color:white"><strong>Branch Choice: &nbsp; &nbsp;   </strong></label>{{course.branch_choice}}<br>
+                <label style="color:white"><strong>Course Choice: &nbsp; &nbsp;   </strong></label>{{course.course_choice}}<br>
+                <label style="color:white"><strong>Semester:  &nbsp; &nbsp;  </strong></label>{{course.semester}}
+            </div>
+
+            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                <button type="submit" style="color:white; background-color: black; width:100%;" onclick="deleteCourse({{course.id}})">DELETE</button>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script type="text/javascript">
+    function deleteCourse(course_id){
+        $.ajax({
+            type: 'GET',
+            url: '/admin/deleteCourse/'+course_id,
+            dataType: 'json',
+            data: {
+                   },
+                   success: function(json) {
+                    location.reload();
+                   }
+        });
+    }
+</script>
+{% endblock %}
