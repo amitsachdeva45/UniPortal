@@ -1,6 +1,8 @@
 {% extends 'adminLayout.html' %}
 {% block content %}
 <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 admin-home-main" style="overflow: auto;">
+    <button onclick="updateSemester()">Update Semester</button>
+    <button onclick="completeDegree()">Complete Degree</button>
     <table class="table table-striped" >
         <thead>
             <tr>
@@ -30,4 +32,28 @@
         </tbody>
     </table>
 </div>
+<script type="text/javascript">
+    function updateSemester() {
+        $.ajax({
+            type: 'GET',
+            url: '/admin/updateSemester/',
+            data: {
+                  },
+                  success: function(json) {
+                    location.reload();
+                  }
+        });
+    }
+    function completeDegree() {
+        $.ajax({
+            type: 'GET',
+            url: '/admin/completeDegree/',
+            data: {
+                  },
+                  success: function(json) {
+                    location.reload();
+                  }
+        });
+    }
+</script>
 {% endblock %}

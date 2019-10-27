@@ -91,3 +91,55 @@ def fetchCandidate(request):
     context['candidates'] = final_list
     return render(request, "adminCandidate.html", context)
 
+def updateSemester(request):
+    collections = "userBasicDetail"
+    data = dict()
+    data['type_of_user'] = "candidate"
+    data['completion_status'] = "incomplete"
+    results = get_all(collections, data)
+    for result in results:
+        if result['branch_choice'] == 'Master' and int(result['current_semester']) < 4 and candidateFetchEachSemCourse(result['current_semester'], str(result['user_id'])) == True:
+            data['current_semester'] = str(int(result['current_semester']) + 1)
+            updCond = dict()
+            updCond['$set'] = data
+            update_one("userBasicDetail", {"user_id": int(result['user_id'])}, updCond)
+        elif result['branch_choice'] == 'Bachelor' and int(result['current_semester']) < 8 and candidateFetchEachSemCourse(result['current_semester'], str(result['user_id'])) == True:
+                data['current_semester'] = str(int(result['current_semester']) + 1)
+                updCond = dict()
+                updCond['$set'] = data
+                update_one("userBasicDetail", {"user_id": int(result['user_id'])}, updCond)
+    return HttpResponse(json.dumps(list()), content_type='application/json', status=200)
+
+def candidateFetchEachSemCourse(semester, user_id):
+    data2 = dict()
+    data2['user_id'] = user_id
+    all_courses = get_all("course_user", data2)
+    data = list()
+    flag = True
+    for course in all_courses:
+        temp = dict()
+        data2 = dict()
+        data2['id'] = int(course['course_id'])
+        single_course = get_find_one("courses", data2)
+        if single_course['semester'] == semester and course['status'] == 'incomplete':
+            return False
+
+    return flag
+def completeDegree(request):
+    collections = "userBasicDetail"
+    data = dict()
+    data['type_of_user'] = "candidate"
+    data['completion_status'] = "incomplete"
+    results = get_all(collections, data)
+    for result in results:
+        if result['branch_choice'] == 'Master' and int(result['current_semester']) == 4 and int(result['fees']) == 0:
+            data['completion_status'] = "complete"
+            updCond = dict()
+            updCond['$set'] = data
+            update_one("userBasicDetail", {"user_id": int(result['user_id'])}, updCond)
+        elif result['branch_choice'] == 'Bachelor' and int(result['current_semester']) == 8 and int(result['fees']) == 0:
+            data['completion_status'] = "complete"
+            updCond = dict()
+            updCond['$set'] = data
+            update_one("userBasicDetail", {"user_id": int(result['user_id'])}, updCond)
+    return HttpResponse(json.dumps(list()), content_type='application/json', status=200)

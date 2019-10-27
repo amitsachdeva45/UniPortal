@@ -17,10 +17,12 @@ def commonData():
     total_semester = 4
     if userData['branch_choice'] == 'Master':
         total_semester = 4
+        final_semester = 4
     else:
         total_semester = 8
+        final_semester = 8
 
-    if userData['current_semester'] == "complete":
+    if userData['completion_status'] == "complete":
         current_semester = 0
         total_semester = -1
     else:
@@ -32,7 +34,7 @@ def commonData():
         "userDetail": userData,
         "userId": cache.get("CandidateUserId"),
         "userName": userData['first_name'] + " " + userData['last_name'],
-        "total_semester": range(1, total_semester+1),
+        "total_semester": range(1, final_semester+1),
         "remaining_semester": range(current_semester, total_semester+1),
         "profile_picture": profile_picture
     }
