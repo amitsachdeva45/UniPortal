@@ -59,3 +59,35 @@ def deleteCourse(request, id):
     return HttpResponse(json.dumps(list()), content_type='application/json', status=200)
 
 
+@login_required(login_url='/')
+def fetchCandidate(request):
+    context = commonData()
+    if bool(context) != True:
+        return HttpResponseRedirect("/")
+    collections = "userBasicDetail"
+    data = dict()
+    data['type_of_user'] = "candidate"
+    data['completion_status'] = "incomplete"
+    results = get_all(collections, data)
+    final_list = list()
+    for result in results:
+        data = dict()
+        if result['branch_choice'] == "Bachelor":
+            data['total_fees'] = 40000
+        else:
+            data['total_fees'] = 20000
+        data['fees'] = result['fees']
+        data['branch_choice'] = result['branch_choice']
+        data['semester'] = result['current_semester']
+        data['course_choice'] = result['course_choice']
+        data['candidate_id'] = result['user_id']
+        temp = dict()
+        temp['id'] = result['user_id']
+        cand = get_find_one("auth_user", temp)
+        data['first_name'] = cand['first_name']
+        data['last_name'] = cand['last_name']
+        data['email'] = cand['email']
+        final_list.append(data)
+    context['candidates'] = final_list
+    return render(request, "adminCandidate.html", context)
+

@@ -1,0 +1,33 @@
+{% extends 'adminLayout.html' %}
+{% block content %}
+<div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 admin-home-main" style="overflow: auto;">
+    <table class="table table-striped" >
+        <thead>
+            <tr>
+              <th scope="col">Candidate Id</th>
+              <th scope="col">First Name</th>
+              <th scope="col">Last Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Total Fees</th>
+              <th scope="col">Pending Fees</th>
+              <th scope="col">Current Semester</th>
+              <th scope="col">Degree</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for candidate in candidates %}
+            <tr>
+                <td>{{candidate.candidate_id}}</td>
+                <td>{{candidate.first_name}}</td>
+                <td>{{candidate.last_name}}</td>
+                <td>{{candidate.email}}</td>
+                <td>{{candidate.total_fees}}</td>
+                <td>{{candidate.fees}}</td>
+                <td>{{candidate.semester}}</td>
+                <td>{{candidate.branch_choice}}&nbsp; {{candidate.course_choice}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
